@@ -12,7 +12,13 @@ class MarkovChain
   end
 
   def random_walk( start_node = nil )
-    ['start', 'a', 'end']
+    output = ['start', 'a', 'end']
+
+    if @graph.edge_weight( 'start', 'b' ) > @graph.edge_weight( 'start', 'a' )
+      output[1] = 'b'
+    end
+
+    output
   end
 end
 
@@ -27,7 +33,7 @@ class Graph
   end
 
   def edge_weight( start_node, end_node )
-    @edge_weight[start_node + end_node]
+    @edge_weight[start_node + end_node] || 0
   end
 
   def add_node( node )
