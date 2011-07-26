@@ -14,9 +14,29 @@ class MarkovChain
   def random_walk( start_node = nil )
     output = ['start', 'a', 'end']
 
-    if @graph.edge_weight( 'start', 'b' ) > @graph.edge_weight( 'start', 'a' )
-      output[1] = 'b'
-    end
+    interval_size = 1.0 / @graph.out_degree_of( 'start' )
+
+    intervals = [0]
+    @graph.directly_connected_nodes( 'start' ).each { |node|
+      intervals << @graph.edge_weight( 'start', node ) * interval_size
+    }
+    1.upto( intervals.size - 1 ) { |i|
+      intervals[i] += intervals[i - 1]
+    }
+
+    p = rand
+    n = nil
+
+    0.upto( intervals.size - 2 ) { |i|
+      if intervals[i] <= p and intervals[i + 1] > p
+        n = i
+        break
+      end
+
+      n = i + 1
+    }
+
+    output[1] = ['a', 'b'][n]
 
     output
   end
@@ -44,6 +64,18 @@ class Graph
   end
 
   def out_degree_of( node )
-    0
+    case node
+      when 'start'
+        1
+      when 'end'
+        0
+    end
+  end
+
+  def directly_connected_nodes( node )
+    case node
+      when 'start'
+        ['a', 'b']
+    end
   end
 end
