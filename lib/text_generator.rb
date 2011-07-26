@@ -22,6 +22,6 @@ class TextGenerator
   end
 
   def generate( start = nil )
-    "Start at the beginning."
+    @markov_chain.random_walk( start ).join( ' ' )
   end
 end
