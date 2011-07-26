@@ -66,7 +66,7 @@ class Graph
   def out_degree_of( node )
     case node
       when 'start'
-        1
+        2
       when 'end'
         0
     end
