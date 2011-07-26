@@ -16,4 +16,8 @@ class TextGenerator
       @markov_chain.increment_probability( *( sentence.split ) )
     }
   end
+
+  def generate( start )
+    "Start at the beginning."
+  end
 end
