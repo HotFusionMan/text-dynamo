@@ -1,4 +1,4 @@
-require 'markov_chain'
+require 'lib/markov_chain'
 
 class TextGenerator
   attr_reader :markov_chain
