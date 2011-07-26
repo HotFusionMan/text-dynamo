@@ -10,6 +10,10 @@ class MarkovChain
     @graph.add_node( end_node )
     @graph.connect( start_node, end_node, 1 )
   end
+
+  def random_walk( start_node )
+    ['start', ['a', 'b'], 'end']
+  end
 end
 
 
@@ -29,7 +33,7 @@ class Graph
   def add_node( node )
   end
 
-  def connect( start_node, end_node, weight )
+  def connect( start_node, end_node, weight = 1 )
     @edge_weight[start_node + end_node] += weight
   end
 end
