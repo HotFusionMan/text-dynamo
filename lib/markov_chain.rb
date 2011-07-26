@@ -12,7 +12,7 @@ class MarkovChain
   end
 
   def random_walk( start_node )
-    ['start', ['a', 'b'], 'end']
+    ['start', 'a', 'end']
   end
 end
 
