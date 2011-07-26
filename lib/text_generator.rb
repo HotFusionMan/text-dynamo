@@ -13,7 +13,11 @@ class TextGenerator
 
   def seed( text )
     sentences( text ).each { |sentence|
-      @markov_chain.increment_probability( *( sentence.split ) )
+      words = sentence.split
+
+      0.upto( words.size - 2 ) { |i|
+        @markov_chain.increment_probability( words[i], words[i + 1] )
+      }
     }
   end
 
