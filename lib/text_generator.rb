@@ -21,7 +21,7 @@ class TextGenerator
     }
   end
 
-  def generate( start )
+  def generate( start = nil )
     "Start at the beginning."
   end
 end
