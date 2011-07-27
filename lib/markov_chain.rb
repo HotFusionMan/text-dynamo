@@ -52,8 +52,8 @@ class Graph
     @nodes = []
   end
 
-  def contains?( s )
-    TRUE
+  def contains?( node )
+    @nodes.include?( node )
   end
 
   def edge_weight( start_node, end_node )
