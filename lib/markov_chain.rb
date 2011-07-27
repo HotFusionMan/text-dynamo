@@ -15,31 +15,41 @@ class MarkovChain
       # Actually:  find, and use as start_node, any node that has out_degree > 0
     end
 
-    output = [start_node, 'a', 'end']
+    output = [start_node]
 
-    interval_size = 1.0 / @graph.out_degree_of( start_node )
+    current_node = start_node
 
-    intervals = [0]
-    @graph.directly_connected_nodes( 'start' ).each { |node|
-      intervals << @graph.edge_weight( 'start', node ) * interval_size
-    }
-    1.upto( intervals.size - 1 ) { |i|
-      intervals[i] += intervals[i - 1]
-    }
+    loop do
+      out_degree = @graph.out_degree_of( current_node )
+      break if out_degree == 0
 
-    p = rand
-    n = nil
+      interval_size = 1.0 / out_degree
 
-    0.upto( intervals.size - 2 ) { |i|
-      if intervals[i] <= p and intervals[i + 1] > p
-        n = i
-        break
-      end
+      intervals = [0]
+      directly_connected_nodes = @graph.directly_connected_nodes( current_node )
 
-      n = i + 1
-    }
+      directly_connected_nodes.each { |node|
+        intervals << @graph.edge_weight( current_node, node ) * interval_size
+      }
+      1.upto( intervals.size - 1 ) { |i|
+        intervals[i] += intervals[i - 1]
+      }
 
-    output[1] = ['a', 'b'][n]
+      p = rand
+      n = nil
+
+      0.upto( intervals.size - 2 ) { |i|
+        if intervals[i] <= p and intervals[i + 1] > p
+          n = i
+          break
+        end
+
+        n = i + 1
+      }
+
+      current_node = directly_connected_nodes[n]
+      output << current_node
+    end
 
     output
   end
