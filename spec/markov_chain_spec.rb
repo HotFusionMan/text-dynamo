@@ -6,9 +6,10 @@ describe MarkovChain do
   end
   
   it "should create graph nodes with increment_probability" do
-    @mc.increment_probability("start","end")
+    build_graph
     @mc.graph.should satisfy { |g|  g.contains?("a")}
     @mc.graph.should satisfy { |g|  g.contains?("b")}
+    @mc.increment_probability("start","end")
     @mc.graph.edge_weight("start","end").should == 1
   end
   
@@ -41,7 +42,7 @@ describe MarkovChain do
     @mc.graph.out_degree_of(walk.last).should == 0
   end
   
-  it "should choose nodes in random_walk randomly by weight" do
+  it "should choose nodes in random_walk randomly by weight b" do
     build_graph(:b => 3, :a => 0)
     walk = @mc.random_walk("start")
     walk.should == ["start", "b", "end"]
