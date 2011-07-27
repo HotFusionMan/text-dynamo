@@ -11,8 +11,13 @@ class MarkovChain
 
   def random_walk( start_node = nil )
     unless start_node
-      start_node = 'start'
+#      start_node = 'start'
       # Actually:  find, and use as start_node, any node that has out_degree > 0
+      loop do
+        start_node = @graph.node( rand( @graph.number_of_nodes ) )
+
+        break if @graph.out_degree_of( start_node ) > 0
+      end
     end
 
     output = [start_node]
@@ -64,6 +69,14 @@ class Graph
 
   def contains?( node )
     @nodes.include?( node )
+  end
+
+  def number_of_nodes
+    @nodes.size
+  end
+
+  def node( index_number )
+    @nodes[index_number]
   end
 
   def edge_weight( start_node, end_node )
